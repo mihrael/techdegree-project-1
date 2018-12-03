@@ -11,13 +11,21 @@ def guess_function():
     global guess
     guess = input("Guess a number between 1-10  ")
     guess = int(guess)
+    if guess < 1 or guess > 10:
+        raise ValueError("Your guess has to be a number between 1-10")
+attempts = 1
 
 def start_game():
     print("Welcome to the number guessing game!")
+    global answer
     answer = random.randint(1, 10)
-    guess_function()
+    while True:
+        try:
+            guess_function()
+            break
+        except ValueError as err:
+            print("Your guess has to be a number between 1-10")
     global attempts
-    attempts = 1
     while guess != answer:
         if guess == answer:
             break
@@ -32,5 +40,6 @@ if __name__ == '__main__':
     # Kick off the program by calling the start_game function.
     start_game()
 
-print("You guessed the correct number! It took you {} attempts".format(attempts))
-print("The game is over")
+if guess == answer:
+    print("You guessed the correct number! It took you {} attempts".format(attempts))
+    print("The game is over")
